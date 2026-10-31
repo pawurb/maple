@@ -71,7 +71,7 @@ webpki-roots = "0.26"
 # code is compiled unless `--features hotpath` is passed; the `tokio` and
 # `reqwest-0-13` features only exist so the `hotpath::wrap::*` type aliases
 # resolve to the raw tokio/reqwest types in normal builds.
-hotpath = { version = "0.23", features = ["tokio", "reqwest-0-13"] }
+hotpath = { version = "0.30.3", features = ["tokio", "reqwest-0-13"] }
 
 [features]
 default = []
@@ -80,7 +80,11 @@ default = []
 # jemalloc). Never enable by default — the report and metrics server cost real
 # CPU on the request path.
 hotpath = ["hotpath/hotpath"]
-hotpath-alloc = ["hotpath/hotpath-alloc"]
+hotpath-alloc = ["hotpath", "hotpath/hotpath-alloc"]
+# hotpath-cloud CI (.github/workflows/hotpath-*.yml): the report upload, and
+# Callgrind instruction counts merged with the native timing.
+hotpath-cloud = ["hotpath", "hotpath/hotpath-cloud"]
+hotpath-callgrind = ["hotpath", "hotpath/hotpath-callgrind"]
 # Exposes `ingest_rules::conformance` for the `ingest_rules_oracle` example.
 conformance = []
 
@@ -133,6 +137,9 @@ items_after_statements = "allow"
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["async_tokio"] }
+# hotpath's Criterion adapter (`hotpath::criterion`), for benches only: a
+# dev-dependency feature keeps criterion out of the maple-ingest binary.
+hotpath = { version = "0.30.3", features = ["criterion-0-5"] }
 proptest = { version = "1.10", default-features = false, features = ["std"] }
 
 [[bench]]

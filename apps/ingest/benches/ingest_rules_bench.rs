@@ -1,6 +1,9 @@
 use std::time::Duration;
 
-use criterion::{black_box, criterion_group, criterion_main, BatchSize, Criterion, Throughput};
+use criterion::black_box;
+// hotpath's wrappers: with `HOTPATH_CRITERION_ITERATIONS` set, one benchmark id runs a fixed
+// number of times and writes a hotpath report (hotpath-cloud CI); otherwise Criterion as usual.
+use hotpath::criterion::{criterion_group, criterion_main, BatchSize, Criterion, Throughput};
 use maple_ingest::ingest_rules::{
     apply_logs, apply_traces, CompiledRules, IngestRuleSpec, RuleStats,
 };
