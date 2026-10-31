@@ -103,3 +103,5 @@ deltas back to the PR as a single sticky comment that updates on each push.
 If the base branch does not support the head's ingest mode (e.g. this PR
 introduces a new mode), the cross-mode comparison is skipped and only
 absolute PR numbers are shown.
+
+For per-function CPU instructions and allocations of the ingest rule engine on each pull request, see the hotpath-cloud workflows (`.github/workflows/hotpath-ingest-rules-*.yml`).
