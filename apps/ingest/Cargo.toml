@@ -136,10 +136,10 @@ similar_names = "allow"
 items_after_statements = "allow"
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["async_tokio"] }
-# hotpath's Criterion adapter (`hotpath::criterion`), for benches only: a
-# dev-dependency feature keeps criterion out of the maple-ingest binary.
-hotpath = { version = "0.30.3", features = ["criterion-0-5"] }
+# Criterion 0.5 through hotpath's adapter (`hotpath::criterion`), for benches only:
+# a dev-dependency feature keeps criterion out of the maple-ingest binary, and
+# `criterion-tokio` gives the tokio runtime its `to_async` executor.
+hotpath = { version = "0.30.3", features = ["criterion-0-5", "criterion-tokio"] }
 proptest = { version = "1.10", default-features = false, features = ["std"] }
 
 [[bench]]
@@ -159,3 +159,10 @@ harness = false
 [[example]]
 name = "ingest_rules_oracle"
 required-features = ["conformance"]
+
+# Unreleased `criterion-tokio` (hotpath-rs/hotpath#778). Patched as a whole so the
+# app and the benches share one hotpath.
+[patch.crates-io]
+hotpath = { git = "https://github.com/hotpath-rs/hotpath", rev = "2360704c" }
+hotpath-macros = { git = "https://github.com/hotpath-rs/hotpath", rev = "2360704c" }
+hotpath-drain = { git = "https://github.com/hotpath-rs/hotpath", rev = "2360704c" }

@@ -1,6 +1,7 @@
+use std::hint::black_box;
 use std::time::Duration;
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput};
+use hotpath::criterion::{criterion_group, criterion_main, BatchSize, Criterion, Throughput};
 use maple_ingest::ai_session::{classify_span, stamp_trace_request, SpanView};
 use opentelemetry_proto::tonic::common::v1::{any_value, AnyValue, InstrumentationScope, KeyValue};
 use opentelemetry_proto::tonic::resource::v1::Resource;
@@ -284,7 +285,7 @@ fn bench_stamp_request(c: &mut Criterion) {
                 stamp_trace_request(&mut request);
                 black_box(request)
             },
-            criterion::BatchSize::LargeInput,
+            BatchSize::LargeInput,
         );
     });
     group.finish();
@@ -387,7 +388,7 @@ fn bench_stamp_trace(c: &mut Criterion) {
                 stamp_trace_request(&mut request);
                 black_box(request)
             },
-            criterion::BatchSize::LargeInput,
+            BatchSize::LargeInput,
         );
     });
     group.finish();
@@ -742,7 +743,7 @@ fn bench_stamp_ai_batch(c: &mut Criterion) {
                 stamp_trace_request(&mut request);
                 black_box(request)
             },
-            criterion::BatchSize::LargeInput,
+            BatchSize::LargeInput,
         );
     });
     group.finish();

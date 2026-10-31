@@ -6,6 +6,7 @@
 )]
 
 use std::collections::HashMap;
+use std::hint::black_box;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
@@ -16,7 +17,7 @@ use axum::extract::{Query, State};
 use axum::http::StatusCode;
 use axum::routing::post;
 use axum::Router;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use hotpath::criterion::{criterion_group, criterion_main, Criterion};
 use maple_ingest::decompress::gunzip_bounded;
 use maple_ingest::telemetry::{
     ClickHouseBreakerConfig, DatasourceNames, SamplingPolicy, TelemetryPipeline, TinybirdConfig,
