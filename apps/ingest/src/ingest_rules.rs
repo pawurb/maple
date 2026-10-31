@@ -1156,9 +1156,11 @@ impl DataPoint for SummaryDataPoint {
 impl Pass<'_> {
     /// Returns false when the span is dropped.
     fn span(&mut self, resource: &[KeyValue], span: &mut Span) -> bool {
+        // Match against a snapshot, so a redaction can never change what later rules see.
+        let attributes = span.attributes.clone();
         let view = RecordView {
             resource,
-            attributes: &span.attributes,
+            attributes: &attributes,
             name: Some(&span.name),
             body: None,
             severity: None,
