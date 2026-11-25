@@ -1486,9 +1486,11 @@ impl Pass<'_> {
         if self.budget.spent() {
             return true;
         }
+        // Match against a snapshot, so a redaction can never change what later rules see.
+        let attributes = span.attributes.clone();
         let view = RecordView {
             resource,
-            attributes: &span.attributes,
+            attributes: &attributes,
             name: Some(&span.name),
             body: None,
             severity: None,
